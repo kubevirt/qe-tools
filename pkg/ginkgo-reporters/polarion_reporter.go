@@ -40,6 +40,8 @@ func init() {
 	flag.StringVar(&Polarion.Filename, "polarion-report-file", "polarion_results.xml", "Set Polarion report file path")
 	flag.StringVar(&Polarion.PlannedIn, "polarion-custom-plannedin", "", "Set Polarion planned-in ID")
 	flag.StringVar(&Polarion.Tier, "test-tier", "", "Set test tier number")
+	flag.StringVar(&Polarion.StorageClass, "storage-class", "", "Set storageclass name")
+	flag.StringVar(&Polarion.WorkerOS, "worker-os", "", "Set worker OS")
 }
 
 type PolarionTestSuite struct {
@@ -85,6 +87,8 @@ type PolarionReporter struct {
 	ProjectId     string
 	PlannedIn     string
 	Tier          string
+	StorageClass  string
+	WorkerOS      string
 }
 
 func (reporter *PolarionReporter) SpecSuiteWillBegin(config config.GinkgoConfigType, summary *types.SuiteSummary) {
@@ -110,7 +114,7 @@ func (reporter *PolarionReporter) SpecSuiteWillBegin(config config.GinkgoConfigT
 			},
 			{
 				Name:  "polarion-testrun-id",
-				Value: reporter.PlannedIn + "_" + reporter.Tier,
+				Value: reporter.PlannedIn + "_" + reporter.Tier + "_" + reporter.StorageClass + "_" + reporter.WorkerOS,
 			},
 			{
 				Name:  "polarion-custom-isautomated",
@@ -119,6 +123,14 @@ func (reporter *PolarionReporter) SpecSuiteWillBegin(config config.GinkgoConfigT
 			{
 				Name:  "polarion-testrun-status-id",
 				Value: "inprogress",
+			},
+			{
+				Name:  "storage-class",
+				Value: reporter.StorageClass,
+			},
+			{
+				Name:  "worker-os",
+				Value: reporter.WorkerOS,
 			},
 		},
 	}

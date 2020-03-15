@@ -50,11 +50,13 @@ var _ = Describe("ginkgo_reporters", func() {
 		}
 
 		reporter = PolarionReporter{
-			Run:       true,
-			Filename:  "polarion.xml",
-			ProjectId: "QE",
-			PlannedIn: "QE_1.0",
-			Tier:      "tier1",
+			Run:          true,
+			Filename:     "polarion.xml",
+			ProjectId:    "QE",
+			PlannedIn:    "QE_1.0",
+			Tier:         "tier1",
+			StorageClass: "storageclass-test",
+			WorkerOS:     "rhel7",
 		}
 
 		properties = PolarionProperties{
@@ -73,7 +75,7 @@ var _ = Describe("ginkgo_reporters", func() {
 				},
 				{
 					Name:  "polarion-testrun-id",
-					Value: "QE_1.0_tier1",
+					Value: "QE_1.0_tier1_storageclass-test_rhel7",
 				},
 				{
 					Name:  "polarion-custom-isautomated",
@@ -81,7 +83,15 @@ var _ = Describe("ginkgo_reporters", func() {
 				},
 				{
 					Name:  "polarion-testrun-status-id",
-                    Value: "inprogress",
+					Value: "inprogress",
+				},
+				{
+					Name:  "storage-class",
+					Value: "storageclass-test",
+				},
+				{
+					Name:  "worker-os",
+					Value: "rhel7",
 				},
 			},
 		}
