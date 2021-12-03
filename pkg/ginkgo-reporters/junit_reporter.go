@@ -28,7 +28,7 @@ import (
 var JunitOutput = ""
 
 func init() {
-	flag.StringVar(&JunitOutput, "junit-output", "", "Set path to Junit report.")
+	flag.StringVar(&JunitOutput, "junit-output", "", "Set path to Junit report. Expects decimal placeholder %d to be present for ParallelNode injection.")
 }
 
 func NewJunitReporter() *reporters.JUnitReporter {
