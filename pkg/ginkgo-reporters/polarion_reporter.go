@@ -37,7 +37,7 @@ var Polarion = PolarionReporter{}
 func init() {
 	flag.BoolVar(&Polarion.Run, "polarion-execution", false, "Run Polarion reporter")
 	flag.StringVar(&Polarion.ProjectId, "polarion-project-id", "", "Set Polarion project ID")
-	flag.StringVar(&Polarion.Filename, "polarion-report-file", "polarion_results.xml", "Set Polarion report file path. Expects decimal placeholder %d to be present for ParallelNode injection")
+	flag.StringVar(&Polarion.Filename, "polarion-report-file", "polarion_results.xml", "Set Polarion report file path. Supports decimal placeholder %d to be present for ParallelNode injection, if it's not, then the parallel node no is used as a prefix")
 	flag.StringVar(&Polarion.PlannedIn, "polarion-custom-plannedin", "", "Set Polarion planned-in ID")
 	flag.StringVar(&Polarion.LookupMethod, "polarion-lookup-method", "id", "Set Polarion lookup method - id or name")
 	flag.StringVar(&Polarion.TestSuiteParams, "test-suite-params", "", "Set test suite params in space seperated name=value structure. Note that the values will be appended to the test run ID")
@@ -219,7 +219,11 @@ func (reporter *PolarionReporter) SpecSuiteDidEnd(summary *types.SuiteSummary) {
 	// include parallel node number in output file name in case of ginkgo parallel runs
 	outputFile := reporter.Filename
 	if reporter.ParallelNode > 0 {
-		outputFile = fmt.Sprintf(reporter.Filename, reporter.ParallelNode)
+		if strings.Contains(reporter.Filename, "%d") {
+			outputFile = fmt.Sprintf(reporter.Filename, reporter.ParallelNode)
+		} else {
+			outputFile = fmt.Sprintf("%d_" + reporter.Filename, reporter.ParallelNode)
+		}
 	}
 
 	// generate polarion test cases XML file
