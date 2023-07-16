@@ -8,7 +8,7 @@ This reporter fills in the xunit file the needed fields in order to upload it in
 
 #### Required parameters:
 - --polarion-execution=true to enable the reporter
-- --project-id="QE" will be set under 'properties'
+- --polarion-project-id="QE" will be set under 'properties'
 - --polarion-custom-plannedin="QE_1_0" will be set under 'properties'
 
 #### Optional parameters:
@@ -31,6 +31,6 @@ when executing the tests, in addition to your regular execution parameters,
 add the reporter parameters as specified above
 
 ``` bash
-go test YOUR_PARAMS --polarion-execution=true --project-id="QE" --polarion-custom-plannedin="QE_1_0" --polarion-report-file="polarion.xml"
+go test YOUR_PARAMS --polarion-execution=true --polarion-project-id="QE" --polarion-custom-plannedin="QE_1_0" --polarion-report-file="polarion.xml"
 ```
 Will generate `polarion.xml` file under the work directory that can be imported into polarion.
